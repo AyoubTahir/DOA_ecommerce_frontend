@@ -4,12 +4,14 @@ import Dashboard from './pages/admin/dashboard/Dashboard';
 import List from './pages/admin/users/List';
 import New from './pages/admin/users/New';
 import Edit from './pages/admin/users/Edit';
+import Login from './pages/admin/auth/Login';
 
 function App() {
   return (
     <Routes>
 
       <Route path='/admin'>
+
         <Route element={<Master />}>
 
           {/*Dashboard*/}
@@ -25,6 +27,10 @@ function App() {
           {/*Products*/}
 
         </Route>
+
+        {/*Auth*/}
+        <Route path='login' element={<Login />} />
+
       </Route>
 
       <Route path='/'>
