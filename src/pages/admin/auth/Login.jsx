@@ -1,34 +1,28 @@
-import axios from '../../../apis/axios'
-import { useState } from "react"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { signin } from '../../../actions/auth';
 
 const Login = () => {
 
-    const [inputs, setInputs] = useState({ email: '', password: '' })
+  const [inputs, setInputs] = useState({ email: '', password: '' })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { loading, errors } = useSelector((state) => state.auth);
     
     const inputsHandle = (e) => {
         setInputs({ ...inputs, [e.target.name] : e.target.value })
     }
 
-    const submitHandle = async (e) => {
-        e.preventDefault()
-
-        try
-        {
-            await axios.get('/sanctum/csrf-cookie')
-            const response = await axios.post('api/login', inputs)
-            console.log(response)
-        }
-        catch (error)
-        {
-            console.log(error.response.data)
-        }
-        
+    const submitHandle = (e) => {
+      e.preventDefault()
+      dispatch(signin(inputs, navigate));
+      
     }
 
   return (
     <div id="page-container" class="main-content-boxed">
-
-
+      {loading && <div id="page-loader" class="show"></div>}
       <main id="main-container">
         <div class="bg-body-dark">
           <div class="row mx-0 justify-content-center">
@@ -37,7 +31,7 @@ const Login = () => {
                 <div class="py-4 text-center">
                   <a class="link-fx fw-bold" href="index.html">
                     <i class="fa fa-fire"></i>
-                    <span class="fs-4 text-body-color">code</span><span class="fs-4">base</span>
+                    <span class="fs-4 text-body-color"> DOA </span><span class="fs-4">ECOMMERCE</span>
                   </a>
                   <h1 class="h3 fw-bold mt-4 mb-2">Welcome to Your Dashboard</h1>
                   <h2 class="h5 fw-medium text-muted mb-0">It’s a great day today!</h2>
@@ -48,13 +42,16 @@ const Login = () => {
                       <h3 class="block-title">Please Sign In</h3>
                     </div>
                     <div class="block-content">
+                      {errors?.message && <p style={{color: "red", textAlign: "center"}}> {errors?.message} </p>}
                       <div class="form-floating mb-4">
                         <input type="email" class="form-control" id="email" name="email" value={inputs.email} onChange={inputsHandle} placeholder="Enter your Email" />
                         <label class="form-label" for="email">Email</label>
+                        {errors?.validation_errors?.email && <span style={{color: "red"}}> {errors?.validation_errors?.email[0]} </span>}
                       </div>
                       <div class="form-floating mb-4">
                         <input type="password" class="form-control" id="password" name="password" value={inputs.password} onChange={inputsHandle} placeholder="Enter your password" />
                         <label class="form-label" for="password">Password</label>
+                        {errors?.validation_errors?.password && <span style={{color: "red"}}> {errors?.validation_errors?.password[0]} </span>}
                       </div>
                       <div class="row">
                         <div class="col-sm-6 d-sm-flex align-items-center push">

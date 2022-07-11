@@ -1,6 +1,20 @@
-
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/auth";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    
+    if (!window.confirm('Are you sure you want to logout?')) return
+
+    dispatch(logout(navigate))
+
+  }
+
   return (
     <nav id="sidebar">
       <div class="sidebar-content">
@@ -46,9 +60,9 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li class="list-inline-item">
-                  <a class="link-fx text-dual" href="op_auth_signin.html">
+                  <button class="link-fx text-dual" style={{background: "transparent"}} onClick={handleLogout} >
                     <i class="fa fa-sign-out-alt"></i>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
