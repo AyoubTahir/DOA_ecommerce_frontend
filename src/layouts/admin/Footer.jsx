@@ -2,13 +2,13 @@
 const Footer = () => {
   return (
     <footer id="page-footer">
-      <div class="content py-3">
-        <div class="row fs-sm">
-          <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+      <div className="content py-3">
+        <div className="row fs-sm">
+          <div className="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
+            Crafted with <i className="fa fa-heart text-danger"></i> by <a className="fw-semibold" href="#a" target="_blank">Tahir Ayoub</a>
           </div>
-          <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-            <a class="fw-semibold" href="https://1.envato.market/95j" target="_blank">Codebase 5.1</a> &copy; <span data-toggle="year-copy"></span>
+          <div className="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
+            <a className="fw-semibold" href="#u" target="_blank">DOA ECOMMERCE 1.0</a> &copy; <span data-toggle="year-copy"></span>
           </div>
         </div>
       </div>

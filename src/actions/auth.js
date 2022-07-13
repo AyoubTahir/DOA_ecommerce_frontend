@@ -30,7 +30,7 @@ export const logout = (navigate) => async (dispatch) => {
       
       dispatch({ type: AUTH_REQUEST});
       
-      const { data } = await api.logout()
+      await api.logout()
       
       dispatch({ type: AUTH_LOGOUT })
       
@@ -51,7 +51,9 @@ export const checkToken = (navigate) => async (dispatch) => {
       
       dispatch({ type: AUTH_REQUEST});
       
-      await api.checkToken()
+      const { data } = await api.checkToken()
+
+      console.log(data)
       
       dispatch({ type: AUTH_TOKEN_CHECK })
         
