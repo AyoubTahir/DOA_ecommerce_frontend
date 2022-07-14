@@ -8,7 +8,7 @@ const authReducer = (state = { authData: null, loading: false }, action) => {
         return { ...state, loading: true};
       
     case actionType.AUTH_SUCCESS:
-        
+
         localStorage.setItem('auth_token', action?.data?.token)
         localStorage.setItem('auth_name', action?.data?.name)
           

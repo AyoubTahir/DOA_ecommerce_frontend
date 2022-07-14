@@ -92,9 +92,9 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li className="nav-main-item">
-                <Link className="nav-main-link" to="/admin/users">
+                <Link className="nav-main-link" to="/admin/categories">
                   <i className="nav-main-link-icon fa fa-house-user"></i>
-                  <span className="nav-main-link-name">Users</span>
+                  <span className="nav-main-link-name">Categories</span>
                 </Link>
               </li>
             </ul>
