@@ -25,4 +25,9 @@ export const csrfCookie = () => instance.get('/sanctum/csrf-cookie')
 export const login = (inputs) => instance.post('api/login', inputs)
 export const logout = () => instance.post('api/logout')
 export const checkToken = () => instance.post('api/checktoken')
+
+
+export const categories = () => instance.get('api/categories')
+
+
 export default instance
