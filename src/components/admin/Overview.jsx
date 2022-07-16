@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom"
 
-
-const Overview = () => {
+const Overview = ({ linkto ,linkname }) => {
   return (
     <>
         <h2 className="content-heading">Overview</h2>
@@ -55,21 +55,21 @@ const Overview = () => {
             </div>
 
             <div className="col-md-6 col-xl-3">
-                <a className="block block-rounded block-link-shadow" href="be_pages_ecom_product_edit.html">
-                <div className="block-content block-content-full block-sticky-options">
-                    <div className="block-options">
-                    <div className="block-options-item">
-                        <i className="fa fa-archive fa-2x text-success-light"></i>
+                <Link className="block block-rounded block-link-shadow" to={linkto}>
+                    <div className="block-content block-content-full block-sticky-options">
+                        <div className="block-options">
+                        <div className="block-options-item">
+                            <i className="fa fa-archive fa-2x text-success-light"></i>
+                        </div>
+                        </div>
+                        <div className="py-3 text-center">
+                        <div className="fs-2 fw-bold mb-0 text-success">
+                            <i className="fa fa-plus"></i>
+                        </div>
+                        <div className="fs-sm fw-semibold text-uppercase text-muted">{ linkname }</div>
+                        </div>
                     </div>
-                    </div>
-                    <div className="py-3 text-center">
-                    <div className="fs-2 fw-bold mb-0 text-success">
-                        <i className="fa fa-plus"></i>
-                    </div>
-                    <div className="fs-sm fw-semibold text-uppercase text-muted">New Product</div>
-                    </div>
-                </div>
-                </a>
+                </Link>
             </div>
         
         </div>

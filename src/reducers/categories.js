@@ -1,3 +1,4 @@
+import swal from "sweetalert"
 import * as actionType from '../constants/actionTypes';
 
 const categoriesReducer = (state = { categories: [], loading: false }, action) => {
@@ -16,6 +17,16 @@ const categoriesReducer = (state = { categories: [], loading: false }, action) =
     case actionType.CATEGORIES_FAILURE:
         
         return { ...state, categories: [], loading: false, errors: action?.error?.response?.data };
+    
+    case actionType.ADD_CATEGORY_SUCCESS:
+      
+        swal("Good job!", action?.data?.message, "success")
+          
+        return { ...state, loading: false, errors: null };
+        
+    case actionType.ADD_CATEGORY_FAILURE:
+        
+        return { ...state, loading: false, errors: action?.error };
     
     default:
         

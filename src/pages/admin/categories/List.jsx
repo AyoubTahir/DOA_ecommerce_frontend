@@ -16,7 +16,7 @@ const List = () => {
 
   return (
     <Container title="Categories List" subtitle="Welcome Admin, you have 12 pending orders">
-      <Overview />
+      <Overview linkto="/admin/categories/new" linkname="Add Category"/>
       <div className="content-heading d-flex justify-content-between align-items-center">
         <span>
           Categories <small>(3580)</small>

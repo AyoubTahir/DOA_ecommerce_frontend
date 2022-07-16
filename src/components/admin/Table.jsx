@@ -1,4 +1,6 @@
+import moment from "moment";
 import { avatar } from "../../assets/admin/images"
+import { BASE_URL } from "../../apis";
 
 const Table = ({ data }) => {
 
@@ -38,7 +40,7 @@ const Table = ({ data }) => {
                         return (
                             <tr key={item.id}>
                                 <td class="">
-                                    <img class="img-avatar img-avatar48" src={avatar} alt="" />
+                                    <img class="img-avatar img-avatar48" src={`${BASE_URL}/${item.photo}`} alt="" />
                                 </td>
                                 <td class="d-none d-sm-table-cell" style={{ padding: "24px 13px" }}>
                                     {item.title}
@@ -53,7 +55,7 @@ const Table = ({ data }) => {
                                     <a href="be_pages_ecom_product_edit.html">Admin</a>
                                 </td>
                                 <td class="d-none d-sm-table-cell" style={{ padding: "24px 13px" }}>
-                                    {item.created_at}
+                                    { moment(item.created_at).utc().format('YYYY-MM-DD')}
                                 </td>
                                 <td class="d-none d-sm-table-cell" style={{ padding: "24px 13px" }}>
                                     <span class="badge bg-success">Active</span>

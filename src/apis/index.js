@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const BASE_URL = 'http://localhost:8000';
 
-//const BASE_URL_API = 'http://localhost:8000/api';
 
 const instance = axios.create({
     baseURL: BASE_URL,
@@ -28,6 +27,6 @@ export const checkToken = () => instance.post('api/checktoken')
 
 
 export const categories = () => instance.get('api/categories')
-
+export const addCategory = (inputs) => instance.post('api/categories', inputs, { headers: { "Content-Type": "multipart/form-data" } })
 
 export default instance
