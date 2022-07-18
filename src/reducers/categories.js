@@ -10,7 +10,7 @@ const categoriesReducer = (
       return { ...state, loading: true };
 
     case actionType.CATEGORIES_SUCCESS:
-      console.log(action.meta);
+      console.log(action.data);
 
       return {
         ...state,

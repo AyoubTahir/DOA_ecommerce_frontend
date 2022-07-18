@@ -26,9 +26,11 @@ export const logout = () => instance.post('api/logout');
 export const checkToken = () => instance.post('api/checktoken');
 
 //Categories
-export const categories = () => instance.get('api/categories');
-export const paginatedCategories = (page) =>
-  instance.get(`api/categories?page=${page}`);
+export const categories = (page, record, search, signal) =>
+  instance.get(
+    `api/categories?page=${page}&paginate=${record}&search=${search}`,
+    { signal: signal }
+  );
 export const addCategory = (inputs) =>
   instance.post('api/categories', inputs, {
     headers: { 'Content-Type': 'multipart/form-data' },

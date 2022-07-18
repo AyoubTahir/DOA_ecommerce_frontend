@@ -2,28 +2,17 @@ import * as actionType from '../constants/actionTypes';
 import * as api from '../apis';
 
 export const categories =
-  (paginate = null) =>
-  async (dispatch) => {
+  (page, record, search, signal) => async (dispatch) => {
     try {
       dispatch({ type: actionType.CATEGORIES_REQUEST });
 
-      if (paginate) {
-        const { data } = await api.paginatedCategories(paginate);
+      const { data } = await api.categories(page, record, search, signal);
 
-        dispatch({
-          type: actionType.CATEGORIES_SUCCESS,
-          data: data.data.categories,
-          meta: data.meta,
-        });
-      } else {
-        const { data } = await api.categories();
-
-        dispatch({
-          type: actionType.CATEGORIES_SUCCESS,
-          data: data.data.categories,
-          meta: data.meta,
-        });
-      }
+      dispatch({
+        type: actionType.CATEGORIES_SUCCESS,
+        data: data.data.categories,
+        meta: data.meta,
+      });
     } catch (error) {
       dispatch({ type: actionType.CATEGORIES_FAILURE, error });
 
