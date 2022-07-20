@@ -8,6 +8,7 @@ const List = () => {
     { field: 'photo', headerName: '#', type: 'image' },
     { field: 'title', headerName: 'Category', type: 'text' },
     { field: 'description', headerName: 'Description', type: 'text' },
+    { field: 'name', headerName: 'Created By', type: 'text', relation: 'user' },
     { field: 'created_at', headerName: 'SUBMITTED', type: 'date' },
     { field: 'status', headerName: 'Status', type: 'status' },
     { field: 'actions', headerName: 'Actions', type: 'actions' },
@@ -15,10 +16,10 @@ const List = () => {
 
   return (
     <Container
-      title="Categories List"
+      title="Categories"
       subtitle="Welcome Admin, you have 12 pending orders"
     >
-      <Overview linkto="/admin/categories/new" linkname="Add Category" />
+      <Overview linkto="/admin/categories/new" name="Category" />
       <Table
         fetchAction={categories}
         deleteAction={deleteCategory}
