@@ -35,6 +35,11 @@ export const addCategory = (inputs) =>
   instance.post('api/categories', inputs, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
+export const showCategory = (id) => instance.get(`api/categories/${id}`);
 export const deleteCategory = (id) => instance.delete(`api/categories/${id}`);
+export const updateCategory = (inputs, id) =>
+  instance.post(`api/categories/${id}`, inputs, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 
 export default instance;

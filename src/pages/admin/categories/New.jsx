@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { addCategory } from '../../../actions/categories';
 import { avatar } from '../../../assets/admin/images';
 import Container from '../../../components/admin/Container';
-import Overview from '../../../components/admin/Overview';
 
 const New = () => {
   const { loading, errors } = useSelector((state) => state.categories);
@@ -91,8 +90,8 @@ const New = () => {
                     id="ecom-product-description-short"
                     name="description"
                     placeholder="Description visible on preview.."
-                    rows="6"
                     onChange={handleInputs}
+                    style={{ height: '180px' }}
                   ></textarea>
                   {errors?.validation_errors?.description && (
                     <span style={{ color: 'red' }}>

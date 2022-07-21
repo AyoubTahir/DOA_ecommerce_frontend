@@ -13,10 +13,10 @@ const Pagination = ({ selector, setPage }) => {
   return (
     <nav aria-label="Products navigation">
       <ul class="pagination justify-content-end mb-0">
-        {selector.meta?.links?.map((page) => {
+        {selector.meta?.links?.map((page, index) => {
           return (
             page.url && (
-              <li class={`page-item ${page.active && 'active'}`}>
+              <li class={`page-item ${page.active && 'active'}`} key={index}>
                 <a
                   class="page-link"
                   href="#g"

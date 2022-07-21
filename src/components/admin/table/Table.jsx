@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 import Record from './Record';
 import Search from './Search';
 
-const Table = ({ fetchAction, deleteAction, model, columns }) => {
+const Table = ({ fetchAction, deleteAction, model, columns, editLink }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [record, setRecord] = useState(10);
@@ -39,25 +39,26 @@ const Table = ({ fetchAction, deleteAction, model, columns }) => {
         <span>
           Categories <small>({selector.meta.total})</small>
         </span>
-        <div class="space-x-1">
+        <div className="space-x-1">
           <Record setRecord={setRecord} setPage={setPage} />
         </div>
       </div>
       <div
-        class={`block block-rounded ${
+        className={`block block-rounded ${
           selector.loading && 'block-mode-loading'
         }`}
       >
         <Search setSearch={setSearch} />
 
-        <div class="block-content block-content-full">
-          <table class="table table-borderless table-striped">
+        <div className="block-content block-content-full">
+          <table className="table table-borderless table-striped">
             <thead>
               <tr>
-                {columns.map((item) => {
+                {columns.map((item, index) => {
                   return (
                     <th
-                      class={
+                      key={index}
+                      className={
                         item.type === 'actions'
                           ? 'text-end'
                           : 'd-none d-sm-table-cell'
@@ -73,8 +74,14 @@ const Table = ({ fetchAction, deleteAction, model, columns }) => {
               {selector[model]?.map((item) => {
                 return (
                   <tr key={item.id}>
-                    {columns.map((column) => {
-                      return handleColumn(column, item, deleteItem);
+                    {columns.map((column, index) => {
+                      return handleColumn(
+                        column,
+                        item,
+                        deleteItem,
+                        editLink,
+                        index
+                      );
                     })}
                   </tr>
                 );
@@ -82,9 +89,11 @@ const Table = ({ fetchAction, deleteAction, model, columns }) => {
             </tbody>
           </table>
 
-          {selector[model].length <= 0 && (
-            <p className="text-center text-danger">No Data Found</p>
-          )}
+          {!selector.errors &&
+            !selector.loading &&
+            selector[model].length <= 0 && (
+              <p className="text-center mt-5">No Data Found</p>
+            )}
 
           <Pagination selector={selector} setPage={setPage} />
         </div>

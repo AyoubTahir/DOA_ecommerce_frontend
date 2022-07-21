@@ -12,7 +12,7 @@ const Record = ({ setRecord, setPage }) => {
           setPage(1);
         }}
       >
-        <option selected="" value={10}>
+        <option defaultValue value={10}>
           10
         </option>
         <option value={25}>25</option>

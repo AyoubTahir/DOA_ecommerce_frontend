@@ -25,6 +25,7 @@ const List = () => {
         deleteAction={deleteCategory}
         model="categories"
         columns={columns}
+        editLink="/admin/categories/edit"
       />
     </Container>
   );

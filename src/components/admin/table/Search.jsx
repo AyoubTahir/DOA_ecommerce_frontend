@@ -3,11 +3,7 @@ import React from 'react';
 const Search = ({ setSearch }) => {
   return (
     <div class="block-content bg-body-light">
-      <form
-        action="be_pages_ecom_products.html"
-        method="POST"
-        onsubmit="return false;"
-      >
+      <form>
         <div class="mb-4">
           <div class="input-group">
             <input

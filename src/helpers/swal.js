@@ -13,3 +13,7 @@ export const deleteConfirm = (callback) => {
     }
   });
 };
+
+export const successNotification = (message) => {
+  swal('Good job!', message, 'success');
+};
