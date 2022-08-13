@@ -1,5 +1,5 @@
-import * as actionType from '../constants/actionTypes';
-import * as api from '../apis';
+import * as actionType from "../constants/actionTypes";
+import * as api from "../apis";
 
 export const categories =
   (page, record, search, signal) => async (dispatch) => {
@@ -7,7 +7,7 @@ export const categories =
       dispatch({ type: actionType.CATEGORIES_REQUEST });
 
       const { data } = await api.categories(page, record, search, signal);
-
+      console.log(data);
       dispatch({
         type: actionType.CATEGORIES_SUCCESS,
         data: data.data.categories,
@@ -26,16 +26,16 @@ export const addCategory = (inputs, navigate) => async (dispatch) => {
 
     const formData = new FormData();
 
-    formData.append('title', inputs.title);
-    formData.append('description', inputs.description);
-    formData.append('status', inputs.status);
-    formData.append('photo', inputs.photo);
+    formData.append("title", inputs.title);
+    formData.append("description", inputs.description);
+    formData.append("status", inputs.status);
+    formData.append("photo", inputs.photo);
 
     const { data } = await api.addCategory(formData);
 
     dispatch({ type: actionType.CATEGORY_SUCCESS, data });
 
-    navigate('/admin/categories');
+    navigate("/admin/categories");
   } catch (error) {
     dispatch({
       type: actionType.CATEGORY_FAILURE,
@@ -89,16 +89,16 @@ export const updateCategory = (inputs, id, navigate) => async (dispatch) => {
 
     const formData = new FormData();
 
-    formData.append('title', inputs.title);
-    formData.append('description', inputs.description);
-    formData.append('status', inputs.status);
-    if (inputs.photo) formData.append('photo', inputs.photo);
+    formData.append("title", inputs.title);
+    formData.append("description", inputs.description);
+    formData.append("status", inputs.status);
+    if (inputs.photo) formData.append("photo", inputs.photo);
 
     const { data } = await api.updateCategory(formData, id);
 
     dispatch({ type: actionType.CATEGORY_SUCCESS, data });
 
-    navigate('/admin/categories');
+    navigate("/admin/categories");
   } catch (error) {
     dispatch({
       type: actionType.CATEGORY_FAILURE,
