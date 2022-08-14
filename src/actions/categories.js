@@ -7,7 +7,7 @@ export const categories =
       dispatch({ type: actionType.CATEGORIES_REQUEST });
 
       const { data } = await api.categories(page, record, search, signal);
-      console.log(data);
+
       dispatch({
         type: actionType.CATEGORIES_SUCCESS,
         data: data.data.categories,

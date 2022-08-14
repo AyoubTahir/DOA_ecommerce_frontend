@@ -2,22 +2,19 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
-import {
-  addCategory,
-  categories as getCategories,
-} from "../../../actions/categories";
-import { avatar } from "../../../assets/admin/images";
+import { categories as getCategories } from "../../../actions/categories";
+import { addProduct } from "../../../actions/products";
 import Container from "../../../components/admin/Container";
 import Uploader from "../../../components/admin/Uploader";
 import Variation from "../../../components/admin/Variation";
 
 const New = () => {
-  const { loading, errors, categories } = useSelector(
-    (state) => state.categories
-  );
+  const { categories } = useSelector((state) => state.categories);
+  const { loading, errors } = useSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
+  const [withVariation, setWithVariation] = useState(1);
   const [variationArray, setVariationArray] = useState([
     {
       id: v4(),
@@ -25,15 +22,17 @@ const New = () => {
       val: {
         size: "",
         color: "#030303",
-        quantity: 0,
+        stock: 0,
       },
     },
   ]);
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
+    selling_price: "",
+    purchase_price: null,
+    category_id: null,
     status: 1,
-    photo: null,
   });
 
   useEffect(() => {
@@ -51,47 +50,26 @@ const New = () => {
       [e.target.name]:
         e.target.name === "status"
           ? parseInt(e.target.value)
-          : e.target.name === "photo"
-          ? e.target.files[0]
+          : e.target.name === "variations"
+          ? setWithVariation(parseInt(e.target.value))
           : e.target.value,
     });
   };
 
-  /*const handleImage = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };*/
-
   const handleSubmit = (e) => {
-    e.preventDefault(); /*
-    dispatch(addCategory(inputs, navigate));*/
+    e.preventDefault();
+    dispatch(
+      addProduct(
+        inputs,
+        images,
+        withVariation ? variationArray : null,
+        navigate
+      )
+    );
   };
 
   const getImages = (images) => {
     setImages(images);
-    console.log(images);
-  };
-
-  const addVarition = () => {
-    setVariationArray((prev) => prev.filter((item) => (item.delete = true)));
-    setVariationArray([
-      ...variationArray,
-      {
-        id: v4(),
-        delete: false,
-        val: {
-          size: "",
-          color: "#030303",
-          quantity: 0,
-        },
-      },
-    ]);
-    console.log(variationArray);
-  };
-
-  const deleteVarition = (id) => {
-    console.log(id);
-    setVariationArray(variationArray.filter((item) => item.id !== id));
-    console.log(variationArray);
   };
 
   return (
@@ -177,13 +155,13 @@ const New = () => {
                           placeholder="Product Price"
                           onChange={handleInputs}
                         />
-                        {errors?.validation_errors?.selling_price && (
-                          <span style={{ color: "red" }}>
-                            {" "}
-                            {errors?.validation_errors?.selling_price[0]}{" "}
-                          </span>
-                        )}
                       </div>
+                      {errors?.validation_errors?.selling_price && (
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors?.validation_errors?.selling_price[0]}{" "}
+                        </span>
+                      )}
                     </div>
                     <div className="col-sm-6">
                       <label className="form-label" htmlFor="ecom-product-cost">
@@ -201,13 +179,13 @@ const New = () => {
                           placeholder="Purchase Price"
                           onChange={handleInputs}
                         />
-                        {errors?.validation_errors?.purchase_price && (
-                          <span style={{ color: "red" }}>
-                            {" "}
-                            {errors?.validation_errors?.purchase_price[0]}{" "}
-                          </span>
-                        )}
                       </div>
+                      {errors?.validation_errors?.purchase_price && (
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors?.validation_errors?.purchase_price[0]}{" "}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -219,6 +197,7 @@ const New = () => {
                     className="form-select"
                     id="categories-select"
                     name="category_id"
+                    onChange={handleInputs}
                   >
                     <option defaultValue disabled>
                       Categories
@@ -282,28 +261,90 @@ const New = () => {
                         Choose new image
                       </label>
                       <Uploader getImages={getImages} />
-                      {errors?.validation_errors?.photo && (
+                      {errors?.validation_errors?.images && (
                         <span style={{ color: "red" }}>
                           {" "}
-                          {errors?.validation_errors?.photo[0]}{" "}
+                          {errors?.validation_errors?.images[0]}{" "}
                         </span>
                       )}
                     </div>
                   </div>
                 </div>
                 <div className="mb-4">
-                  {variationArray.map((value, index) => (
-                    <Variation
-                      key={index}
-                      handleInputs={handleInputs}
-                      addVarition={addVarition}
-                      deleteVarition={deleteVarition}
-                      value={value}
-                      setVariationArray={setVariationArray}
-                      variationArray={variationArray}
+                  <label className="form-label d-block">Variations</label>
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      id="ecom-product-variations-active"
+                      name="variations"
+                      value={1}
+                      defaultChecked
+                      onChange={handleInputs}
                     />
-                  ))}
+                    <label
+                      className="form-check-label"
+                      htmlFor="ecom-product-variations-active"
+                    >
+                      Active
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      id="ecom-product-variations-disable"
+                      name="variations"
+                      value={0}
+                      onChange={handleInputs}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="ecom-product-variations-disable"
+                    >
+                      Disable
+                    </label>
+                  </div>
                 </div>
+                {!!withVariation && (
+                  <div className="mb-4">
+                    {variationArray.map((value, index) => (
+                      <Variation
+                        key={index}
+                        handleInputs={handleInputs}
+                        value={value}
+                        setVariationArray={setVariationArray}
+                        variationArray={variationArray}
+                        errors={errors}
+                        index={index}
+                      />
+                    ))}
+                  </div>
+                )}
+                {!withVariation && (
+                  <div className="mb-4">
+                    <label
+                      className="form-label"
+                      htmlFor="ecom-product-total_stock"
+                    >
+                      Total Stock
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="ecom-product-total_stock"
+                      name="total_stock"
+                      placeholder="Total Stock"
+                      onChange={handleInputs}
+                    />
+                    {errors?.validation_errors?.total_stock && (
+                      <span style={{ color: "red" }}>
+                        {" "}
+                        {errors?.validation_errors?.total_stock[0]}{" "}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </form>

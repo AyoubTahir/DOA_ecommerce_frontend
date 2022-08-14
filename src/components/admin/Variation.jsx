@@ -1,13 +1,31 @@
-import React from "react";
+import { v4 } from "uuid";
 
 const Variation = ({
-  handleInputs,
-  addVarition,
-  deleteVarition,
   value,
   setVariationArray,
   variationArray,
+  errors,
+  index,
 }) => {
+  const addVarition = () => {
+    setVariationArray((prev) => prev.filter((item) => (item.delete = true)));
+    setVariationArray([
+      ...variationArray,
+      {
+        id: v4(),
+        delete: false,
+        val: {
+          size: "",
+          color: "#030303",
+          stock: 0,
+        },
+      },
+    ]);
+  };
+
+  const deleteVarition = (id) => {
+    setVariationArray(variationArray.filter((item) => item.id !== id));
+  };
   return (
     <div className="row">
       <div className="col-12 col-md-5 mb-4">
@@ -31,6 +49,13 @@ const Variation = ({
             value={value.val.size}
           />
         </div>
+        {errors?.validation_errors[`variations.${index}.size`] &&
+          errors?.validation_errors[`variations.${index}.size`][0] && (
+            <span style={{ color: "red" }}>
+              {" "}
+              {errors?.validation_errors[`variations.${index}.size`][0]}{" "}
+            </span>
+          )}
       </div>
       <div className="col-5 col-md-3">
         <div className="input-group">
@@ -54,6 +79,13 @@ const Variation = ({
             value={value.val.color}
           />
         </div>
+        {errors?.validation_errors[`variations.${index}.color`] &&
+          errors?.validation_errors[`variations.${index}.color`][0] && (
+            <span style={{ color: "red" }}>
+              {" "}
+              {errors?.validation_errors[`variations.${index}.color`][0]}{" "}
+            </span>
+          )}
       </div>
       <div className="col-5 col-md-3">
         <div className="input-group">
@@ -62,8 +94,8 @@ const Variation = ({
             type="number"
             style={{ height: "38px" }}
             className="form-control"
-            id={`quantity-${value.id}`}
-            name={`quantity-${value.id}`}
+            id={`stock-${value.id}`}
+            name={`stock-${value.id}`}
             placeholder="Product Quantity"
             onChange={(e) => {
               setVariationArray(
@@ -71,15 +103,22 @@ const Variation = ({
                   item.id === value.id
                     ? {
                         ...item,
-                        val: { ...item.val, quantity: e.target.value },
+                        val: { ...item.val, stock: parseInt(e.target.value) },
                       }
                     : item
                 )
               );
             }}
-            value={value.val.quantity}
+            value={value.val.stock}
           />
         </div>
+        {errors?.validation_errors[`variations.${index}.stock`] &&
+          errors?.validation_errors[`variations.${index}.stock`][0] && (
+            <span style={{ color: "red" }}>
+              {" "}
+              {errors?.validation_errors[`variations.${index}.stock`][0]}{" "}
+            </span>
+          )}
       </div>
       <div className="col-2 col-md-1">
         {value.delete ? (

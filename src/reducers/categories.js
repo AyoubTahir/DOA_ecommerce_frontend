@@ -1,11 +1,11 @@
-import * as actionType from '../constants/actionTypes';
-import { successNotification } from '../helpers/swal';
+import * as actionType from "../constants/actionTypes";
+import { successNotification } from "../helpers/swal";
 
 const categoriesReducer = (
   state = {
     categories: [],
     meta: {},
-    category: { title: '', description: '', status: 1, photo: null },
+    category: { title: "", description: "", status: 1, photo: null },
     errors: null,
     loading: false,
   },
@@ -13,12 +13,9 @@ const categoriesReducer = (
 ) => {
   switch (action.type) {
     case actionType.CATEGORIES_REQUEST:
-      console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
       return { ...state, loading: true };
 
     case actionType.CATEGORIES_SUCCESS:
-      console.log(action.data);
-
       return {
         ...state,
         categories: action.data,
@@ -44,8 +41,6 @@ const categoriesReducer = (
       return { ...state, loading: false, errors: action?.error };
 
     case actionType.SHOW_CATEGORY_SUCCESS:
-      console.log(action.data);
-
       return {
         ...state,
         category: action.data,
